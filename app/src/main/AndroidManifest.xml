@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.single.baidumapbase">
+
+    <!-- OpenGLES 2.0 -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- baidu map api key -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="lAqZpRiUiqYVcQNulM48MQGhy542GNpn"/>
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- 百度service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+            <intent-filter>
+
+                <!--
+                    当前版本7.1
+                    基础定位+离线定位+室内定位 = 全量定位 -> 原Android定位SDK，当前版本v7.1
+                    基础地图+检索功能+LBS云检索+计算工具+周边雷达+骑行导航 -> 原Android SDK（地图SDK），当前版本v4.3.1
+                    驾车导航（含TTS） -> 原导航SDK，当前版本v3.3.0
+                    全景图功能 -> 原全景图SDK，当前版本v2.4.1
+                -->
+                <action android:name="com.baidu.location.service_v7.1">
+                </action>
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".activity.MapSdkActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.MapLocActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.StaticLocActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.DynamicLocActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait">
+        </activity>
+    </application>
+
+</manifest>
